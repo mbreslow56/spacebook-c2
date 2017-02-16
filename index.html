@@ -3,7 +3,7 @@
 <head>
     <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
-  <title></title>
+  <title>Spacebook</title>
 </head>
 <body>
   <div class="row">
@@ -13,6 +13,8 @@
       </div>
 
       <div class="posts">
+        <!-- This is where the post goes -->
+        <!-- u need to empty this div -->
       </div>
 
       <form class="beer-form">
@@ -26,9 +28,56 @@
         <button type="button" class="btn btn-primary add-post">Post</button>
       </form>
 
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script>
+        var posts = [];
+
+        // var guid = function() {
+        //     function s4() {
+        //       return Math.floor((1 + Math.random()) * 0x10000)
+        //       .toString(16)
+        //       .substring(1);
+        //     }
+        //     return s4() + s4() + "-" + s4() + "-" + s4() + "-"
+        //     + s4() + "-" + s4() + s4 () + s4();
+        // };
+
+        var uniqueId = 0;
+
+        var pushPost = function(postText, postId) {
+            posts.push({text: postText, id: postId})
+            uniqueId++;
+            console.log(posts);
+        }
+
+        var newPost = function() {
+          $('.posts').find('.post').remove();
+          for (i = 0; i < posts.length; i++){
+                $('.posts').prepend('<p class="post" data-id="' + posts[i].id + '"><a href="#" class="remove">remove</a>  ' + posts[i].text + "</p>")
+            }
+        }
+
+         $('.posts').on('click', 'p', function() {
+          
+            $(this).remove();
+            for (i = 0; i < posts.length; i++) {
+            posts.splice(posts[i].id, 1)
+              }
+        }
+      )
+
+        $('button').on('click', function() {
+          var text = $('#post-name').val()
+          pushPost(text, uniqueId);
+          newPost();
+        }
+      )
+
+
+      </script>
+
     </div>
   </div>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
